@@ -25,7 +25,7 @@ public class Application {
     private String link;
 
     @Column(name = "application_date")
-    private Calendar application_date;
+    private String application_date;
 
 
     @Enumerated(EnumType.STRING)
@@ -59,11 +59,11 @@ public class Application {
         this.link = link;
     }
 
-    public Calendar getApplication_date() {
+    public String getApplication_date() {
         return application_date;
     }
 
-    public void setApplication_date(Calendar application_date) {
+    public void setApplication_date(String application_date) {
         this.application_date = application_date;
     }
 

@@ -2,6 +2,7 @@ package com.samyr.jobtracker.service;
 
 import com.samyr.jobtracker.model.Application;
 
+import com.samyr.jobtracker.model.Company;
 import com.samyr.jobtracker.model.Status;
 import com.samyr.jobtracker.repositories.ApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,21 @@ public class ApplicationService {
 
     @Autowired
     private ApplicationRepository applicationRepository;
+    @Autowired
+    CompanyService companyService;
 
 
     public Application createApplication(Application application){
         Application newApplication = new Application();
-        newApplication.setCompany(application.getCompany());
+        newApplication.setCompany(validateCompany(application));
         newApplication.setRole(application.getRole());
         newApplication.setLink(application.getLink());
         newApplication.setApplication_date(application.getApplication_date());
+
+
         setStatus(newApplication, application);
-        validateRequiredField(newApplication.getRole(), "Role");
-        validateDate(newApplication.getApplication_date());
+        validateRole(newApplication);
+
         return applicationRepository.save(newApplication);
 
     }
@@ -42,11 +47,14 @@ public class ApplicationService {
 
     public Application updateApplication(Application application){
         Application existingApplication = getApplicationById(application.getId());
-        existingApplication.setCompany(application.getCompany());
+        existingApplication.setCompany(validateCompany(application));
         existingApplication.setRole(application.getRole());
         existingApplication.setLink(application.getLink());
         existingApplication.setApplication_date(application.getApplication_date());
-        existingApplication.setStatus(application.getStatus());
+
+
+        updateStatus(existingApplication, application);
+        validateRole(existingApplication);
         return applicationRepository.save(existingApplication);
     }
 
@@ -55,22 +63,30 @@ public class ApplicationService {
         applicationRepository.delete(application);
     }
 
-    private void validateRequiredField(String value, String message){
-        if(value==null){
-            throw new IllegalArgumentException(message + " is required");
+    private void validateRole(Application application){
+        if(application.getRole()==null){
+            throw new IllegalArgumentException("Role is required");
         }
     }
 
-    private void validateDate(Calendar calendar){
-        calendar.
+    private Company validateCompany(Application application){
+        return companyService.validateCompany(application.getCompany());
     }
 
 
-    private void setStatus(Application application, Application newApplication){
-        if(application.getStatus()==null){
-            application.setStatus(Status.SAVED);
+    private void setStatus(Application sourceApplication, Application targetApplication){
+        if(targetApplication.getStatus()==null){
+            sourceApplication.setStatus(Status.SAVED);
         }
-        else application.setStatus(newApplication.getStatus());
+        else{
+            sourceApplication.setStatus(targetApplication.getStatus());
+        }
+    }
+
+    private void updateStatus(Application sourceApplication, Application targetApplication){
+        if(targetApplication.getStatus() != null && sourceApplication.getStatus() != targetApplication.getStatus()){
+            sourceApplication.setStatus(targetApplication.getStatus());
+        }
     }
 
 }

@@ -42,4 +42,12 @@ public class CompanyService {
         Company company = getCompanyById(id);
         companyRepository.delete(company);
     }
+
+    public Company validateCompany(Company company){
+        if(company == null){
+            throw new IllegalArgumentException("Company is Required");
+        }
+        return getCompanyById(company.getId());
+    }
+
 }
