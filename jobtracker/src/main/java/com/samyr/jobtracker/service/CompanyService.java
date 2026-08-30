@@ -21,16 +21,14 @@ public class CompanyService {
         return companyRepository.save(storeCompany);
     }
 
-    public Company getCompanyById(int id){
+    public Company getCompanyById(Integer id){
         return companyRepository.findById(id).
                 orElseThrow(); // change this after
     }
 
-    public Company updateCompany(Company company){
-        Company companyNew = getCompanyById(company.getId());
-        companyNew.setName(company.getName());
-        companyNew.setSite(company.getSite());
-        companyNew.setLocalization(company.getLocalization());
+    public Company updateCompanyById(int id, Company company){
+        Company companyNew = getCompanyById(id);
+        updateCompany(companyNew, company);
         return companyRepository.save(companyNew);
     }
 
@@ -38,7 +36,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public void deleteCompanyById(int id){
+    public void deleteCompanyById(Integer id){
         Company company = getCompanyById(id);
         companyRepository.delete(company);
     }
@@ -48,6 +46,18 @@ public class CompanyService {
             throw new IllegalArgumentException("Company is Required");
         }
         return getCompanyById(company.getId());
+    }
+
+    private void updateCompany(Company existingCompany, Company newCompany){
+        if (newCompany.getLocalization() != null){
+            existingCompany.setLocalization(newCompany.getLocalization());
+        }
+        if(newCompany.getName() != null){
+            existingCompany.setName(newCompany.getName());
+        }
+        if (newCompany.getSite() != null){
+            existingCompany.setSite(newCompany.getSite());
+        }
     }
 
 }
