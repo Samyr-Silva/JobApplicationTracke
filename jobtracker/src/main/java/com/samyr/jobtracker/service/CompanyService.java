@@ -28,7 +28,7 @@ public class CompanyService {
 
     public Company updateCompanyById(int id, Company company){
         Company companyNew = getCompanyById(id);
-        updateCompany(companyNew, company);
+        updateValidator(companyNew, company);
         return companyRepository.save(companyNew);
     }
 
@@ -48,7 +48,7 @@ public class CompanyService {
         return getCompanyById(company.getId());
     }
 
-    private void updateCompany(Company existingCompany, Company newCompany){
+    private void updateValidator(Company existingCompany, Company newCompany){
         if (newCompany.getLocalization() != null){
             existingCompany.setLocalization(newCompany.getLocalization());
         }

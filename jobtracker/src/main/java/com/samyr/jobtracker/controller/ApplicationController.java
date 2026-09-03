@@ -1,0 +1,43 @@
+package com.samyr.jobtracker.controller;
+
+import com.samyr.jobtracker.model.Application;
+import com.samyr.jobtracker.service.ApplicationService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/app")
+public class ApplicationController {
+
+    private ApplicationService applicationService;
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/create")
+    public ResponseEntity<Application> createApplication(@RequestBody Application application){
+        return new ResponseEntity<>(applicationService.createApplication(application), HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/get/{id}")
+    public ResponseEntity<Application> getApplication(@PathVariable int id){
+        return new ResponseEntity<>(applicationService.getApplicationById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    public ResponseEntity<List<Application>> applicationList(){
+        return new ResponseEntity<>(applicationService.applicationsList(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
+    public ResponseEntity<Application> updateApplication(@PathVariable int id, @RequestBody Application application){
+        return new ResponseEntity<>(applicationService.updateApplication(id, application), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
+    public ResponseEntity<String> deleteApplication(@PathVariable int id){
+        return new ResponseEntity<>("Application with the ID: " + id + " deleted", HttpStatus.OK);
+    }
+
+}

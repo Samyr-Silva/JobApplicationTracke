@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.Calendar;
+
 import java.util.List;
 
 @Service
@@ -45,16 +45,10 @@ public class ApplicationService {
         return applicationRepository.findAll();
     }
 
-    public Application updateApplication(Application application){
-        Application existingApplication = getApplicationById(application.getId());
-        existingApplication.setCompany(validateCompany(application));
-        existingApplication.setRole(application.getRole());
-        existingApplication.setLink(application.getLink());
-        existingApplication.setApplication_date(application.getApplication_date());
+    public Application updateApplication(int id, Application application){
+        Application existingApplication = getApplicationById(id);
+        updateValidator(existingApplication, application);
 
-
-        updateStatus(existingApplication, application);
-        validateRole(existingApplication);
         return applicationRepository.save(existingApplication);
     }
 
@@ -88,5 +82,29 @@ public class ApplicationService {
             sourceApplication.setStatus(targetApplication.getStatus());
         }
     }
+
+    private void updateValidator(Application existingApplication, Application newApplication){
+        if(newApplication.getCompany() != null){
+            existingApplication.setCompany(validateCompany(newApplication));
+        }
+
+        if(newApplication.getRole() != null){
+            existingApplication.setRole(newApplication.getRole());
+            validateRole(existingApplication);
+        }
+
+        if(newApplication.getApplication_date() != null){
+            existingApplication.setApplication_date(newApplication.getApplication_date());
+        }
+
+        if(newApplication.getStatus() != null){
+            updateStatus(existingApplication, newApplication);
+        }
+
+        if(newApplication.getLink() != null){
+            existingApplication.setLink(newApplication.getLink());
+        }
+    }
+
 
 }
