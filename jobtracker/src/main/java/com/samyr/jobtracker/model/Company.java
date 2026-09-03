@@ -1,6 +1,8 @@
 package com.samyr.jobtracker.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "company")
@@ -11,12 +13,15 @@ public class Company {
     private Integer id;
 
     @Column(name = "name")
+    @NotBlank(message = "The company must have a name")
     private String name;
 
     @Column(name = "site")
+    @NotNull
     private String site;
 
     @Column(name = "local")
+    @NotNull
     private String localization;
 
 

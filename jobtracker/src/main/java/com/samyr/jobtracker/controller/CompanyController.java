@@ -2,6 +2,7 @@ package com.samyr.jobtracker.controller;
 
 import com.samyr.jobtracker.model.Company;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CompanyController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public ResponseEntity<Company> createCompany(@RequestBody Company company){
+    public ResponseEntity<Company> createCompany(@Valid @RequestBody Company company){
         return new ResponseEntity<>(companyService.createCompany(company), HttpStatus.CREATED);
     }
 
@@ -35,7 +36,7 @@ public class CompanyController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable int id, @RequestBody Company company){
+    public ResponseEntity<Company> updateCompany(@Valid @PathVariable int id, @RequestBody Company company){
         return new ResponseEntity<>(companyService.updateCompanyById(id, company), HttpStatus.ACCEPTED);
     }
 

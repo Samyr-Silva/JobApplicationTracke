@@ -1,8 +1,11 @@
 package com.samyr.jobtracker.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 
 @Entity
@@ -16,19 +19,23 @@ public class Application {
 
     @JoinColumn(name = "company_id")
     @ManyToOne
+    @NotNull
     private Company company;
 
     @Column(name = "role")
+    @NotBlank
     private String role;
 
     @Column(name = "link")
     private String link;
 
     @Column(name = "application_date")
-    private String application_date;
+    @NotNull
+    private LocalDate application_date;
 
 
     @Enumerated(EnumType.STRING)
+    @NotBlank
     private Status status;
 
     public Integer getId(){
@@ -59,11 +66,11 @@ public class Application {
         this.link = link;
     }
 
-    public String getApplication_date() {
+    public LocalDate getApplication_date() {
         return application_date;
     }
 
-    public void setApplication_date(String application_date) {
+    public void setApplication_date(LocalDate application_date) {
         this.application_date = application_date;
     }
 
