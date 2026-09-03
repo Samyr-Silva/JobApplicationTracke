@@ -1,5 +1,6 @@
 package com.samyr.jobtracker.service;
 
+import com.samyr.jobtracker.exception.CompanyNotFoundException;
 import com.samyr.jobtracker.model.Company;
 import com.samyr.jobtracker.repositories.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class CompanyService {
 
     public Company getCompanyById(Integer id){
         return companyRepository.findById(id).
-                orElseThrow(); // change this after
+                orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     public Company updateCompanyById(int id, Company company){

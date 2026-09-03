@@ -1,5 +1,6 @@
 package com.samyr.jobtracker.service;
 
+import com.samyr.jobtracker.exception.ApplicationNotFoundException;
 import com.samyr.jobtracker.model.Application;
 
 import com.samyr.jobtracker.model.Company;
@@ -38,7 +39,7 @@ public class ApplicationService {
 
     public Application getApplicationById(int id){
         return applicationRepository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() -> new ApplicationNotFoundException(id));
     }
 
     public List<Application> applicationsList(){
