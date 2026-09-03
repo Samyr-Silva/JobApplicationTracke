@@ -2,6 +2,7 @@ package com.samyr.jobtracker.controller;
 
 import com.samyr.jobtracker.model.Application;
 import com.samyr.jobtracker.service.ApplicationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequestMapping(value = "/app")
 public class ApplicationController {
 
+    @Autowired
     private ApplicationService applicationService;
 
 
