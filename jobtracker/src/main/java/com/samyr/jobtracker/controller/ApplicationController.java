@@ -40,7 +40,7 @@ public class ApplicationController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
     public ResponseEntity<String> deleteApplication(@PathVariable int id){
-        return new ResponseEntity<>("Application with the ID: " + id + " deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Application with the ID: " + id + " deleted", HttpStatus.NO_CONTENT);
     }
 
 }
