@@ -1,6 +1,7 @@
 package com.samyr.jobtracker.controller;
 
 import com.samyr.jobtracker.model.Application;
+import com.samyr.jobtracker.model.Status;
 import com.samyr.jobtracker.service.ApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class ApplicationController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public ResponseEntity<List<Application>> applicationList(){
         return new ResponseEntity<>(applicationService.applicationsList(), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/applications/")
+    public ResponseEntity<List<Application>> getApplicationsByStatus(@RequestParam Status status){
+        return new ResponseEntity<>(applicationService.applicationsByStatus(status), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")

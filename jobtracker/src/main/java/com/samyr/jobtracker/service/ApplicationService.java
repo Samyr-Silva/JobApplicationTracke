@@ -40,6 +40,10 @@ public class ApplicationService {
                 .orElseThrow(() -> new ApplicationNotFoundException(id));
     }
 
+    public List<Application> applicationsByStatus(Status status){
+        return applicationRepository.findByStatus(status);
+    }
+
     public List<Application> applicationsList(){
         return applicationRepository.findAll();
     }

@@ -2,7 +2,7 @@ package com.samyr.jobtracker.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "company")

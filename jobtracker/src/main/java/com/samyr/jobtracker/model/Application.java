@@ -3,10 +3,10 @@ package com.samyr.jobtracker.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.time.LocalDate;
-import java.util.Calendar;
+
 
 @Entity
 @Table(name = "application")
