@@ -17,11 +17,9 @@ public class Company {
     private String name;
 
     @Column(name = "site")
-    @NotNull
     private String site;
 
     @Column(name = "local")
-    @NotNull
     private String localization;
 
 

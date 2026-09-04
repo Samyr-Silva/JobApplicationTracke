@@ -31,11 +31,10 @@ public class Application {
 
     @Column(name = "application_date")
     @NotNull
-    private LocalDate application_date;
+    private LocalDate applicationDate;
 
 
     @Enumerated(EnumType.STRING)
-    @NotBlank
     private Status status;
 
     public Integer getId(){
@@ -66,12 +65,12 @@ public class Application {
         this.link = link;
     }
 
-    public LocalDate getApplication_date() {
-        return application_date;
+    public LocalDate getApplicationDate() {
+        return applicationDate;
     }
 
-    public void setApplication_date(LocalDate application_date) {
-        this.application_date = application_date;
+    public void setApplicationDate(LocalDate applicationDate) {
+        this.applicationDate = applicationDate;
     }
 
     public Status getStatus() {

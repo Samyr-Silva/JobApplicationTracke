@@ -27,12 +27,10 @@ public class ApplicationService {
         newApplication.setCompany(validateCompany(application));
         newApplication.setRole(application.getRole());
         newApplication.setLink(application.getLink());
-        newApplication.setApplication_date(application.getApplication_date());
+        newApplication.setApplicationDate(application.getApplicationDate());
 
 
         setStatus(newApplication, application);
-        validateRole(newApplication);
-
         return applicationRepository.save(newApplication);
 
     }
@@ -56,12 +54,6 @@ public class ApplicationService {
     public void deleteApplication(int id){
         Application application = getApplicationById(id);
         applicationRepository.delete(application);
-    }
-
-    private void validateRole(Application application){
-        if(application.getRole()==null){
-            throw new IllegalArgumentException("Role is required");
-        }
     }
 
     private Company validateCompany(Application application){
@@ -91,11 +83,10 @@ public class ApplicationService {
 
         if(newApplication.getRole() != null){
             existingApplication.setRole(newApplication.getRole());
-            validateRole(existingApplication);
         }
 
-        if(newApplication.getApplication_date() != null){
-            existingApplication.setApplication_date(newApplication.getApplication_date());
+        if(newApplication.getApplicationDate() != null){
+            existingApplication.setApplicationDate(newApplication.getApplicationDate());
         }
 
         if(newApplication.getStatus() != null){

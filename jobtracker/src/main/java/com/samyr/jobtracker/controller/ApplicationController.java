@@ -34,13 +34,14 @@ public class ApplicationController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
-    public ResponseEntity<Application> updateApplication(@Valid @PathVariable int id, @RequestBody Application application){
+    public ResponseEntity<Application> updateApplication(@PathVariable int id, @Valid @RequestBody Application application){
         return new ResponseEntity<>(applicationService.updateApplication(id, application), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
     public ResponseEntity<String> deleteApplication(@PathVariable int id){
-        return new ResponseEntity<>("Application with the ID: " + id + " deleted", HttpStatus.NO_CONTENT);
+        applicationService.deleteApplication(id);
+        return new ResponseEntity<>("Application with the ID: " + id + " deleted", HttpStatus.OK);
     }
 
 }

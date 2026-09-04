@@ -36,14 +36,14 @@ public class CompanyController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")
-    public ResponseEntity<Company> updateCompany(@Valid @PathVariable int id, @RequestBody Company company){
+    public ResponseEntity<Company> updateCompany(@PathVariable int id, @Valid @RequestBody Company company){
         return new ResponseEntity<>(companyService.updateCompanyById(id, company), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id){
         companyService.deleteCompanyById(id);
-        return new ResponseEntity<>("Company with the ID: " + id + " deleted", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("Company with the ID: " + id + " deleted", HttpStatus.OK);
     }
 
 }
