@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,6 +46,26 @@ public class ApplicationService {
         return applicationRepository.findByStatus(status);
     }
 
+    public List<Application> applicationsByDate(int days) {
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(days);
+
+        List<Application> applications = new ArrayList<>();
+
+        for (Application application : applicationsList()) {
+            LocalDate date = application.getApplicationDate();
+
+            if (!date.isBefore(startDate) && !date.isAfter(today)) {
+                applications.add(application);
+            }
+        }
+
+        return applications;
+    }
+
+    public List<Application> applicationsByCompany(Company company){
+        return applicationRepository.findByCompany(company);
+    }
     public List<Application> applicationsList(){
         return applicationRepository.findAll();
     }
