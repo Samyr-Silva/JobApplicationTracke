@@ -64,7 +64,13 @@ public class ApplicationService {
     }
 
     public List<Application> applicationsByCompany(String companyName){
-        return applicationRepository.findByCompany(companyName);
+        List<Application> applications = new ArrayList<>();
+        for (Application app : applicationsList()){
+            if(companyName.trim().toLowerCase().equals(app.getCompany().getName().toLowerCase())){
+                applications.add(app);
+            }
+        }
+        return applications;
     }
     public List<Application> applicationsList(){
         return applicationRepository.findAll();
