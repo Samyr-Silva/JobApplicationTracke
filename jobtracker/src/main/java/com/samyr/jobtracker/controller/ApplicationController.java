@@ -1,6 +1,7 @@
 package com.samyr.jobtracker.controller;
 
 import com.samyr.jobtracker.model.Application;
+import com.samyr.jobtracker.model.Company;
 import com.samyr.jobtracker.model.Status;
 import com.samyr.jobtracker.service.ApplicationService;
 import jakarta.validation.Valid;
@@ -37,6 +38,16 @@ public class ApplicationController {
     @RequestMapping(method = RequestMethod.GET, value = "/applications/")
     public ResponseEntity<List<Application>> getApplicationsByStatus(@RequestParam Status status){
         return new ResponseEntity<>(applicationService.applicationsByStatus(status), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/applications/date")
+    public ResponseEntity<List<Application>> getApplicationsByDate(@RequestParam int days){
+        return new ResponseEntity<>(applicationService.applicationsByDate(days), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/applications/company")
+    public ResponseEntity<List<Application>> getApplicationsByCompany(@RequestParam String name){
+        return new ResponseEntity<>(applicationService.applicationsByCompany(name), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update/{id}")

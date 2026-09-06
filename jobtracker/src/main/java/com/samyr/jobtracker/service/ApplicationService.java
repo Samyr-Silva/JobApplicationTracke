@@ -63,8 +63,8 @@ public class ApplicationService {
         return applications;
     }
 
-    public List<Application> applicationsByCompany(Company company){
-        return applicationRepository.findByCompany(company);
+    public List<Application> applicationsByCompany(String companyName){
+        return applicationRepository.findByCompany(companyName);
     }
     public List<Application> applicationsList(){
         return applicationRepository.findAll();

@@ -12,5 +12,5 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
     public List<Application> findByStatus(Status status);
 
-    public List<Application> findByCompany(Company company);
+    public List<Application> findByCompany(String companyName);
 }
