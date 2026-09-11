@@ -4,8 +4,10 @@ import com.samyr.jobtracker.model.Company;
 import com.samyr.jobtracker.repositories.CompanyRepository;
 import com.samyr.jobtracker.service.CompanyService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class CompanyServiceTest {
 
     @Mock
