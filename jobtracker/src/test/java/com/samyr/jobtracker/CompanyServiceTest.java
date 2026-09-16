@@ -205,4 +205,41 @@ public class CompanyServiceTest {
         verify(companyRepository, never()).save(any());
     }
 
+    @Test
+    public void validateCompanyShouldThrowIllegalArgumentExceptionWhenNull(){
+        // ARRANGE
+        Company company = null;
+
+        // ACT
+        assertThrows(IllegalArgumentException.class,
+                () -> companyService.validateCompany(company));
+
+        verifyNoInteractions(companyRepository);
+    }
+
+    @Test
+    public void validateCompanyShouldReturnCompanyWhenExists (){
+        // ARRANGE
+        Company company = new Company();
+        company.setId(1);
+        company.setName("Microsoft");
+        company.setSite("https://microsoft.com");
+        company.setLocalization("Lisboa");
+
+        when(companyRepository.findById(1))
+                .thenReturn(Optional.of(company));
+
+        // ACT
+        Company result = companyService.validateCompany(company);
+
+        // ASSERT
+        assertEquals("Microsoft", result.getName());
+        verify(companyRepository).findById(1);
+    }
+
+    @Test
+    public void shouldThrowCompanyNotFoundIfNotExists(){
+
+    }
+
 }
