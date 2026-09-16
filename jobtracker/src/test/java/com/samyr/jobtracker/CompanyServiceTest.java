@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CompanyServiceTest {
@@ -127,4 +126,83 @@ public class CompanyServiceTest {
         // ASSERT
         verify(companyRepository).delete(company);
     }
+
+    @Test
+    public void shouldUpdateCompany(){
+        // ARRANGE
+        Company company = new Company();
+        company.setId(1);
+        company.setName("Microsoft");
+        company.setSite("https://microsoft.com");
+        company.setLocalization("Lisboa");
+
+        Company company2 = new Company();
+        company2.setName("Meta");
+        company2.setSite("https://metaIA.com");
+        company2.setLocalization("Porto");
+
+        when(companyRepository.findById(company.getId()))
+                .thenReturn(Optional.of(company));
+
+        when(companyRepository.save(company))
+                .thenReturn(company);
+
+        // ACT
+        Company result = companyService.updateCompanyById(1, company2);
+
+        // ASSERT
+        assertEquals(company2.getName(), result.getName());
+        assertEquals(1, result.getId());
+        verify(companyRepository).findById(1);
+        verify(companyRepository).save(company);
+
+    }
+
+    @Test
+    public void shouldUpdateOnlyLocation(){
+        // ARRANGE
+        Company company = new Company();
+        company.setId(1);
+        company.setName("Microsoft");
+        company.setSite("https://microsoft.com");
+        company.setLocalization("Lisboa");
+
+        Company company2 = new Company();
+        company2.setLocalization("Porto");
+
+        when(companyRepository.findById(company.getId()))
+                .thenReturn(Optional.of(company));
+
+        when(companyRepository.save(company))
+                .thenReturn(company);
+
+
+        // ACT
+        Company result = companyService.updateCompanyById(1, company2);
+
+        // ASSERT
+        assertEquals("Microsoft", result.getName());
+        assertEquals("https://microsoft.com", result.getSite());
+        assertEquals("Porto", result.getLocalization());
+        verify(companyRepository).findById(1);
+        verify(companyRepository).save(company);
+    }
+
+    @Test
+    public void shouldThrowCompanyNotFoundWhenUpdating(){
+        // ARRANGE
+        Company company = new Company();
+        company.setName("Microsoft");
+
+        when(companyRepository.findById(9999))
+                .thenReturn(Optional.empty());
+
+        // ASSERT
+        assertThrows(CompanyNotFoundException.class,
+                () -> companyService.updateCompanyById(9999, company));
+
+        verify(companyRepository).findById(9999);
+        verify(companyRepository, never()).save(any());
+    }
+
 }
